@@ -29,3 +29,9 @@ Follow the steps:
 - git clone
 - npm i
 - ng serve
+
+## CloudFront URL
+## https://d1vfughezz28ct.cloudfront.net/
+## bucket S3
+## https://my-shop-emma.s3.amazonaws.com/index.html
+
