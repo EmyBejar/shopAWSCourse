@@ -19,7 +19,7 @@ export class ProductsService extends ApiService {
       return EMPTY;
     }
 
-    const url = this.getUrl('bff', 'products');
+    const url = this.getUrl('bff', '/products');
     return this.http.post<Product>(url, product);
   }
 
@@ -60,7 +60,9 @@ export class ProductsService extends ApiService {
       console.warn(
         'Endpoint "bff" is disabled. To enable change your environment.ts config'
       );
-      return this.http.get<Product[]>('https://5degmjylui.execute-api.us-east-1.amazonaws.com/dev/products');
+
+      let url = "https://j8bvbf9vk3.execute-api.us-east-1.amazonaws.com/dev/products";
+      return this.http.get<Product[]>('/assets/products.json');
     }
 
     const url = this.getUrl('bff', 'products');
