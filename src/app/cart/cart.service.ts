@@ -49,6 +49,8 @@ export class CartService {
       ...val,
     };
 
+    
+    console.log("acout product ", newVal)
     if (!(id in newVal)) {
       newVal[id] = 0;
     }

@@ -1,6 +1,6 @@
 export interface Product {
   /** Available count */
-  count: number;
+  stock: number;
   description: string;
   id: string;
   price: number;

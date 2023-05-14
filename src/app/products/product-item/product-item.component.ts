@@ -1,9 +1,10 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Product } from '../product.interface';
 import { CartService } from '../../cart/cart.service';
-import { Observable } from 'rxjs';
-import { map, shareReplay, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize, map, shareReplay, tap } from 'rxjs/operators';
 import { CartCountControlsComponent } from '../../core/cart-count-controls/cart-count-controls.component';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-product-item',
@@ -22,20 +23,23 @@ export class ProductItemComponent implements OnInit {
     | undefined;
 
   countInCart$!: Observable<number>;
-
-  constructor(private readonly cartService: CartService) {}
+  
+  constructor(private readonly cartService: CartService, private readonly productsService: ProductsService) {}
 
   get id(): string {
     return this.product.id;
   }
 
   ngOnInit(): void {
-    this.countInCart$ = this.cartService.cart$.pipe(
+    this.productsService
+    .getProductById(this.id)
+    .subscribe();
+
+    this.countInCart$ = this.cartService.cart$.pipe(   
       map((cart) => {
         if (!(this.id in cart)) {
           return 0;
         }
-
         return cart[this.id];
       }),
       this.updateFocusIfNeeded(),

@@ -35,7 +35,7 @@
       (decrement)="remove()"
       [productName]="product.title"
       [count]="(countInCart$ | async)!"
-      [available]="product.count"
+      [available]="product.stock"
     ></app-cart-count-controls>
   </mat-card-actions>
 </mat-card>
