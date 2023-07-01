@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-
 import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { Product } from './product.interface';
-
 import { ApiService } from '../core/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService extends ApiService {
+  countsProducts$!:Observable<Product>;
+
   createNewProduct(product: Product): Observable<Product> {
     if (!this.endpointEnabled('bff')) {
       console.warn(
@@ -19,7 +18,7 @@ export class ProductsService extends ApiService {
       return EMPTY;
     }
 
-    const url = this.getUrl('bff', 'products');
+    const url = this.getUrl('bff', '/products');
     return this.http.post<Product>(url, product);
   }
 
@@ -48,11 +47,13 @@ export class ProductsService extends ApiService {
           )
         );
     }
-
-    const url = this.getUrl('bff', `products/${id}`);
+    const url = this.getUrl('bff', `/products?productId=${id}`);
     return this.http
-      .get<{ product: Product }>(url)
-      .pipe(map((resp) => resp.product));
+      .get(url)
+      .pipe(map((resp:any) => {
+        console.log("here in services", resp)
+        return resp.product
+      }));
   }
 
   getProducts(): Observable<Product[]> {

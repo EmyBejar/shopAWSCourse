@@ -15,5 +15,6 @@ export class ProductsComponent implements OnInit {
 
   constructor(private readonly productsService: ProductsService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }
